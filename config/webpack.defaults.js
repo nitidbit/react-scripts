@@ -2,6 +2,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const precss = require('precss');
 const postcssCalc = require('postcss-calc');
+const webpack = require('webpack');
 
 const cssOptions = {
   sourceMap: true,
@@ -11,9 +12,24 @@ const cssOptions = {
   localIdentName: '[path][local]',
 };
 
+
+let additionalPlugins = [];
+
+try {
+  const ReactLoadablePlugin = require('@7rulnik/react-loadable/webpack').ReactLoadablePlugin;
+  additionalPlugins = additionalPlugins.concat(
+    new ReactLoadablePlugin({
+      filename: 'build/react-loadable.json',
+    }),
+  );
+} catch (e) {
+  console.log('react-loadable is required to enable code-splitting:');
+  console.log(e.stack || e.message || e);
+}
+
 module.exports = {
-  mode: 'development',
   context: __dirname,
+  mode: 'development',
   entry: [
     'babel-polyfill',
     path.resolve('src/index.js'),
@@ -23,7 +39,7 @@ module.exports = {
     path: path.resolve('build/assets'),
     publicPath: '/assets/',
   },
-  plugins: [],
+  plugins: [].concat(additionalPlugins),
   resolve: {
     modules: ['node_modules'],
   },
