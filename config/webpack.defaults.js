@@ -36,8 +36,14 @@ module.exports = {
   ],
   output: {
     filename: '[name].js',
+    chunkFilename: '[name][chunkhash].js',
     path: path.resolve('build/assets'),
     publicPath: '/assets/',
+  },
+  optimization: {
+    splitChunks: {
+      minSize: 0,
+    },
   },
   plugins: [].concat(additionalPlugins),
   resolve: {

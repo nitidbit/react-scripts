@@ -3,16 +3,23 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const merge = require('webpack-merge');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const defaults = require('./webpack.defaults.js');
 
 module.exports = merge.smart({
   module: {
     rules: [{
       test: /\.css$/,
-      use: [path.join(__dirname, '../lib/exportLocalsLoader.js')],
+      use: [
+        MiniCSSExtractPlugin.loader,
+        // path.join(__dirname, '../lib/exportLocalsLoader.js'),
+      ],
     }, {
       test: /\.scss$/,
-      use: [path.join(__dirname, '../lib/exportLocalsLoader.js')],
+      use: [
+        MiniCSSExtractPlugin.loader,
+        // path.join(__dirname, '../lib/exportLocalsLoader.js'),
+      ],
     }],
   },
 }, defaults, {
@@ -38,6 +45,9 @@ module.exports = merge.smart({
       banner: 'require("source-map-support").install();',
       raw: true,
       entryOnly: true,
+    }),
+    new MiniCSSExtractPlugin({
+      filename: '[contenthash].css',
     }),
     new ProgressBarPlugin(),
   ],
