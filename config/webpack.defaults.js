@@ -2,7 +2,6 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const precss = require('precss');
 const postcssCalc = require('postcss-calc');
-
 const cssOptions = {
   sourceMap: true,
   modules: true,
@@ -21,7 +20,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve('build/assets'),
-    publicPath: '/assets/',
+    publicPath: './assets/',
   },
   plugins: [],
   resolve: {
