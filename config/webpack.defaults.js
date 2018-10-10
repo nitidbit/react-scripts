@@ -66,7 +66,10 @@ module.exports = {
           },
         },
       ],
-    }, {
+    },{
+      test: /\.yml$/,
+      loaders: ['json-loader', 'yaml-loader'], 
+    },{
       test: /\.scss$/,
       use: [
         {
